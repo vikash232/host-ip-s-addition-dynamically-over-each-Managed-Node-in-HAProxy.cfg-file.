@@ -1,0 +1,3 @@
+package_name: "httpd"
+doc_root: /var/www/html/
+service_name: "httpd"

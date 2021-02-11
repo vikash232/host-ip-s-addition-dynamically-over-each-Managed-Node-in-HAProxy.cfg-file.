@@ -1,0 +1,32 @@
+- name: Configuring Webserver
+  hosts: all
+  vars_files:
+          - "{{ ansible_facts['distribution'] }}.{{ ansible_facts['distribution_major_version'] }}.yml"
+
+  tasks:
+          - name: Installing httpd package 
+            package:
+                    name: "{{ package_name }}"
+                    state: present
+
+            register: a
+          - debug:
+                  var: a
+
+          - name: Copying webpages
+            template:
+                    src: webpage.html.j2
+                    dest: "{{ doc_root }}"
+
+            register: b
+          - debug:
+                  var: b
+
+          - name: Start service
+            service:
+                    name: "{{ service_name }}"
+                    state: started
+
+            register: c
+          - debug:
+                  var: c
